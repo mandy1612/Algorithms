@@ -1,0 +1,167 @@
+class LinearList<D> implements List<D>
+{
+    ListObject<D> head,tail;
+    LinearList()
+    {
+        head=null;
+        tail=null;
+    }
+    public void add(D v)
+    {
+        if(head==null)
+        {
+            ListObject<D> ob=new ListObject<D>(v);
+            head=ob;
+            tail=ob;
+        }
+        else
+        {
+            ListObject<D> ob=new ListObject<D>(v);
+            tail.next=ob;
+            tail=ob;
+        }
+    }
+    public void add(D v,Integer pos)
+    {
+        Integer size=getSize();
+        Integer p=1;
+        //ListObject k=null;
+        try
+        {
+            if(pos>(size+1))
+            {
+                BoundsException ob=new BoundsException();
+                throw ob;
+            }
+        }
+        catch(BoundsException x)
+        {
+            x.printError();
+            return;
+        }
+        if(pos==1)
+        {
+            ListObject<D> ob=new ListObject<D>(v);
+            ob.next=head;
+            head=ob;
+        }
+        if(pos>1 && pos<=size)
+        {
+            ListObject<D> ob=new ListObject<D>(v);
+            for(ListObject<D> i=head;i!=null;i=i.next)
+            {
+                ++p;
+                if(p==pos)
+                {
+                    ob.next=i.next;
+                    i.next=ob;
+                    break;
+                }
+            }
+        }
+        if(pos==(size+1))
+        {
+            ListObject<D> ob=new ListObject<D>(v);
+            tail.next=ob;
+            tail=ob;
+        }
+        
+    }
+    public boolean remove(D m)
+    {
+        Integer p=0;
+        Integer size=getSize();
+        for(ListObject<D> i=head;i!=null;i=i.next)
+        {
+            ++p;
+            if(i.val==m)
+            {
+                if(p==1)
+                head=head.next;
+                else
+                {
+                    Integer p1=1;
+                    for(ListObject<D> j=head;j!=null;j=j.next)
+                    {
+                        ++p1;
+                        if(p1==p)
+                        {
+                            j.next=j.next.next;
+                            break;
+                        }
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+    public Integer search(D v)
+    {
+        Integer p=-1;
+        for(ListObject<D> i=head;i!=null;i=i.next)
+        {
+            ++p;
+            if(i.val==v)
+            return (p);
+        }
+        return -1;
+    }
+    public D getElementAt(Integer pos)
+    {
+        Integer p=0;
+        Integer size=getSize();
+        try
+        {
+            if(pos>(size+1))
+            {
+                BoundsException ob=new BoundsException();
+                throw ob;
+            }
+        }
+        catch(BoundsException x)
+        {
+            x.printError();
+            return null;
+        }
+        for(ListObject<D> i=head;i!=null;i=i.next)
+        {
+            ++p;
+            if(p==pos)
+            return i.val;
+        }
+        return null;
+    }
+    public void reverse()
+    {
+        Integer size=getSize();
+        int p=size;
+        Object ob[]=new Object[size];
+        for(ListObject<D> i=head;i!=null;i=i.next)
+        ob[--p]=i.val;
+        for(ListObject<D> i=head;i!=null;i=i.next)
+        i.val=(D)ob[p++];
+    }
+    public Integer getSize()
+    {
+        Integer j=0;
+        for(ListObject<D> i=head;i!=null;i=i.next)
+        ++j;
+        return j;
+    }
+    public boolean isEmpty()
+    {
+        Integer size=getSize();
+        if(size==0)
+        return true;
+        return false;
+    }
+    public void traverse()
+    {
+        for(ListObject<D> i=head;i!=null;i=i.next)
+        {
+            System.out.print(i.val+" ");
+        }
+    }
+        
+}
