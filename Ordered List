@@ -1,0 +1,94 @@
+class OrderedList<D> implements List<D>
+{
+    Integer buffer,size;
+    Object arr[];
+    OrderedList()
+    {
+        buffer=5;
+        size=0;
+        arr=new Object[buffer];
+    }
+    public void add(D a)
+    {
+        Integer p=-1;
+        for(Integer i=0;i<size;++i)
+        {
+            if((Integer)a<(Integer)arr[i])
+            {
+                p=i;
+                break;
+            }
+        }
+        if(p!=-1)
+        {
+            for(Integer i=size-1;i>=p;--i)
+            arr[i+1]=arr[i];
+            arr[p]=a;
+        }
+        else
+        arr[size]=a;
+        ++size;
+        if(size==buffer)
+        {
+            Object arr2[]=new Object[buffer*2];
+            buffer*=2;
+            for(Integer j=0;j<size;++j)
+                arr2[j]=arr[j]; 
+            arr=arr2;
+        }
+    }
+    public boolean remove(Integer m)
+    {
+        Integer k=search((D)m);
+        if(k!=-1)
+        {
+            for(Integer j=k;j<size-1;++j)
+            arr[j]=arr[j+1];
+            --size;
+            return true;
+        }
+        return false;
+    }
+    public Integer search(D o)
+    {
+        Integer l=0,m=0,u=size;
+        while(l<=u)
+        {
+            m=(l+u)/2;
+            if((Integer)arr[m]>(Integer)o)
+            u=m-1;
+            else if((Integer)arr[m]==(Integer)o)
+            return m;
+            else if((Integer)arr[m]<(Integer)o)
+            l=m+1;
+        }
+        return -1;
+    }
+    public D getElementAt(Integer pos)
+    {
+        pos++;
+        if(pos>0 && pos<=size)
+        return (D)arr[pos-1];
+        else
+        {
+            pos=-1;
+            return (D)pos;
+        }
+    }
+    public boolean isEmpty()
+    {
+        if(size==0)
+        return true;
+        return false;
+    }
+    public Integer getSize()
+    {
+        return size;
+    }
+    public void traverse()
+    {
+        for(Integer i=0;i<size;++i)
+        System.out.print(arr[i]+" ");
+    }
+    
+}
