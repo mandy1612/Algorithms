@@ -1,0 +1,96 @@
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+//&&          &&&&&&&&&&    &&&&&&&&&&&   &&&&&&&  &&&&&          &&          &&          &&              &&&
+//&&  &&&&&&  &&&&&&&&&  &&&  &&&&&&&&&    &&&&&&  &&&&&&&&&  &&&&&&  &&&&&&&&&&  &&&&&&&&&&&&&&&&  &&&&&&&&&
+//&&  &&  &&  &&&&&&&&  && &&  &&&&&&&&  &  &&&&&  &&&&&&&&&  &&&&&&  &&&&&&&&&&  &&&&&&&&&&&&&&&&  &&&&&&&&&
+//&&  &&  &&  &&&&&&&  &&   &&  &&&&&&&  &&  &&&&  &&&&&&&&&  &&&&&&  &&&&&&&&&&  &&&&&&&&&&&&&&&&  &&&&&&&&&
+//&&  &&&&&   &&&&&&  &&&&&&&&&  &&&&&&  &&&  &&&  &&&&&&&&&  &&&&&&      &&&&&&      &&&&&&&&&&&&  &&&&&&&&&
+//&&  &&&     &&&&&               &&&&&  &&&&  &&  &&  &&&&&  &&&&&&  &&&&&&&&&&  &&&&&&&&&&&&&&&&  &&&&&&&&&
+//&&  && &&   &&&&  &&&&&&&&&&&&&  &&&&  &&&&&  &  &&  &&&&&  &&&&&&  &&&&&&&&&&  &&&&&&&&&&&&&&&&  &&&&&&&&&
+//&&  &&  &&  &&&  &&           &&  &&&  &&&&&&    &&&  &&&  &&&&&&&  &&&&&&&&&&  &&&&&&&&&&&&&&&&  &&&&&&&&&
+//&&  &&   && &&  &&             &&  &&  &&&&&&&   &&&&&    &&&&&&&&          &&          &&&&&&&&  &&&&&&&&&
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+#include<bits/stdc++.h>
+using namespace std;
+ 
+#define ll long long int 
+#define F(i,a,b) for(long long int i = (a); i < (b) ; ++i)
+#define f1(n) for(long long int i = 0 ; i < (n) ; ++i)
+#define f2(n) for(long long int j = 0 ; j < (n) ; ++j)
+#define vat(array) vector<ll> array
+
+double nthRoot(int A, int N) 
+{ 
+    // intially guessing a random number between 
+    // 0 and 9 
+    double xPre = rand() % 10; 
+  
+    //  smaller eps, denotes more accuracy 
+    double eps = 1e-3; 
+  
+    // initializing difference between two 
+    // roots by INT_MAX 
+    double delX = INT_MAX; 
+  
+    //  xK denotes current value of x 
+    double xK; 
+  
+    //  loop untill we reach desired accuracy 
+    while (delX > eps) 
+    { 
+        //  calculating current value from previous 
+        // value by newton's method 
+        xK = ((N - 1.0) * xPre + 
+              (double)A/pow(xPre, N-1)) / (double)N; 
+        delX = abs(xK - xPre); 
+        xPre = xK; 
+    } 
+  
+    return xK; 
+} 
+
+int main()
+{
+        ios_base::sync_with_stdio(false), cin.tie(NULL);
+        ll t;
+        cin>>t;
+        ll z0=t-1;
+        ll arr[t];
+        ll sum0=0,sum1=0,sum2=0;
+        f1(t)
+        {
+             cin>>arr[i];
+        }
+        sort(arr,arr+t);
+        ll z1=arr[t-1];
+        //cout<<z1<<'\n';
+        double nthRootValue = nthRoot(z1, z0); 
+        ll jk = nthRootValue;
+        //cout<<jk<<'\n';
+        //cout<<nthRootValue<<'\n';
+        if(t>33)
+        {
+             f1(t)
+               {
+                    sum0+=arr[i];
+                    //cout<<sum1<<" ";
+               }
+               cout<<sum0-t<<'\n';
+        }
+        else{
+         f1(t)
+          {
+               sum1+=abs(pow(jk, i)-arr[i]);
+               //cout<<sum1<<" ";
+          }
+          //cout<<sum1<<" ";
+          f1(t)
+          {
+               sum2+=abs(pow(jk+1, i)-arr[i]);
+               
+          }
+          //cout<<sum2<<" ";
+          //std::cout << sum1 << std::endl;
+          //std::cout << sum2 << std::endl;
+          std::cout << min(sum1,sum2) << std::endl;
+        }
+}
